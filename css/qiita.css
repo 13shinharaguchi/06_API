@@ -1,0 +1,22 @@
+#search {
+    width: auto;
+    height: 30px;
+}
+
+.qiita_wrapper {
+    background-color: bisque;
+}
+
+.qiita_api {
+    height: 30px;
+}
+
+.input_area {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.date_input {
+    display: flex;
+}
