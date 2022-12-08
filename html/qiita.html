@@ -5,17 +5,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/qiita.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Qiita</title>
 </head>
 
 <body>
-    <h1>Qiitaの記事を取得する</h1>
-    <input type="text" id="search" />
-    <button class="qiita_api">更新</button>
+    <h1 id="top">Qiitaの記事を検索</h1>
+    <button id="move">一覧へ移動</button>
+    <div class="input_area">
+        <input type="text" id="search" />
+        <div class="date_input">
+            <input type="date" id="start_date" />
+            <span>～</span>
+            <input type="date" id="end_date" />
+        </div>
+        <label>何個取得するか</label>
+        <input type="number" id="quantity" />
+        <label>保存された個数条件</label>
+        <input type="number" id="stocks" />
+    </div>
+    <button class="qiita_api">検索</button>
     <div id="output"></div>
-    <script src="/js/qiita.js"></script>
+
+    <script type="module" src="/js/qiita.js"></script>
 </body>
 
 </html>

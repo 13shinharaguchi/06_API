@@ -1,19 +1,24 @@
 # Qiita_API
 ## DEMO
-  - デプロイしている場合はURLを記入（任意）
+  - なし
 
 ## 紹介と使い方
-  - どんなプロダクトなのか，どのように操作するのか
-  - を見た人がわかるように書こう！
+  - qiita_APIを使用して、タイトルに検索ワードが入っているものを抽出して、いいねとストック数を表示する  
+  また、そのサイトのurlをQR_APIにかけてQRコードを生成する
 
 ## 工夫した点
   - めっちゃ書こう
 
 ## 苦戦した点
-  - 明日の自分への伝言も大事
+  - リクエストの書き方がよくわかってない
 
 ## 参考にした web サイトなど
-  - 後で見返せるように
+- [QR code](https://goqr.me/api/doc/create-qr-code/#general)
+- [Qiita API v2の仕様](https://qiita.com/api/v2/docs#%E6%A6%82%E8%A6%81)
+- [node.js+Qiita APIでQiita記事の検索を効率化する](https://www.granvalley.co.jp/blog/search-for-qiita-articles)
+- [検索時に利用できるオプション](https://help.qiita.com/ja/articles/qiita-search-options)
+- [無料APIとjQueryで海外サッカーの試合日程・順位表を自動取得する方法](https://footballtickets-by-gakuseimiler.com/entry/football-data-api)
+
 
 ## イメージ図
 - qiitaで検索したいワードをinputの中に記入し、検索ボタンを押すと記事が表示される
@@ -33,7 +38,12 @@
 - コンソールを確認して、引き抜きたいものに合わせて記述する
 - htmlに表示するようにする
 - いいねの数でソートして表示を変化させる
-- 
+- 変わった使い方ができないから、取得したurlをQRコードに変換する
+- いいねとストックの使い方がいまいちぴんとこないから、いいねのかずに応じて、QRの大きさを変化させる  
+正方形でないといけないところが難点
+- 検索にあてはまらないときは、空の配列がかえってくるからifで空の配列が来たときの処理を書く
+- いいね数が閾値を超えたらfirebaseに保存して、一覧ページで表示する
+
 
 ## 必要部品
 - 検索input
@@ -52,3 +62,7 @@
 - 候補１ サッカーの試合情報API
 - 候補２ qiitaのAPIをさわってみる
 
+
+## git addする前に消すもの
+- qiita_list.jsのfirebaseAPIきー
+- qiita.jsのfirebaseAPIキー、qiitaAPIきー
