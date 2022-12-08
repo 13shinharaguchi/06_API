@@ -20,39 +20,37 @@ function convertTimestampToDatetime(timestamp) {
 
 
 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 $('.qiita_api').on("click", function () {
     const search = $('#search').val()
+    const item = $('#select_area').val()
     const start_date = $('#start_date').val()
     const end_date = $('#end_date').val()
     const quantity = $('#quantity').val()
     const stocks = $('#stocks').val()
     const time = convertTimestampToDatetime()
-    api_get(search, start_date, end_date, quantity, stocks, time)
+    api_get(search, item, start_date, end_date, quantity, stocks, time)
 })
 
 
 
-function api_get(search, start_date, end_date, quantity, stocks, time) {
+function api_get(search, item, start_date, end_date, quantity, stocks, time) {
     $(function () {
         //ページ数と何個引っ張って来るかを設定する変数
         const page = 1
         $.ajaxSetup({
             Headers: { Authorization: "Bearer " }
         });
-        $.getJSON(`https://qiita.com/api/v2/items?page=${page}&per_page=${quantity}&query=title:${search}+created%3A%3E%3D${start_date}+created%3A%3C%3D${end_date}+stocks:>=${stocks}`, function (data) {
-            console.log(data)
+        $.getJSON(`https://qiita.com/api/v2/items?page=${page}&per_page=${quantity}&query=${item}:${search}+created%3A%3E%3D${start_date}+created%3A%3C%3D${end_date}+stocks:>=${stocks}`, function (data) {
 
             if (data.length === 0) {
                 $('#top').html("検索なし")
             } else {
-
-
                 //入れる箱を準備
                 let qiita_box = [];
-
                 //レスポンス（data）が配列なのでfor文で中身の回数繰り返しする
                 for (var i = 0; i < data.length; i++) {
                     let title = data[i].title
@@ -68,7 +66,7 @@ function api_get(search, start_date, end_date, quantity, stocks, time) {
                     console.log(tags)
 
                     qiita_box.push(
-                        `
+                     `
                     <div class="qiita_wrapper">
                     <p><a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a></p>
                     <div>タグ:${tags}</div>
@@ -83,7 +81,7 @@ function api_get(search, start_date, end_date, quantity, stocks, time) {
                     $('#output').html(qiita_box)
 
                     //ライクが１０以上はfirebaseに保存する
-                    if (like > 1) {
+                    if (like > 10) {
                         const postData = {
                             title: title,
                             url: url,

@@ -1,6 +1,8 @@
 #search {
     width: auto;
     height: 30px;
+    margin-bottom: 20px;
+
 }
 
 .qiita_wrapper {
@@ -19,4 +21,23 @@
 
 .date_input {
     display: flex;
+    margin-bottom: 20px;
+}
+
+.top_area{
+    display: flex;
+}
+
+#select_area{
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+#quantity{
+    margin-bottom: 20px;
+}
+
+.button_area{
+    display: flex;
+    
 }
