@@ -4,8 +4,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebas
 import {
     getFirestore,
     collection,
-    addDoc,
-    serverTimestamp,
     onSnapshot,
     query,
     orderBy,
@@ -22,6 +20,7 @@ function convertTimestampToDatetime(timestamp) {
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 }
 
+//この下にfirebaseAPIkeyを記述
 
 
 const app = initializeApp(firebaseConfig);
