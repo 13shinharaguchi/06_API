@@ -18,12 +18,13 @@ function convertTimestampToDatetime(timestamp) {
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 }
 
-
+//この下にfirebaseAPIkeyを記述
 
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+//検索ボタンを押した処理
 $('.qiita_api').on("click", function () {
     const search = $('#search').val()
     const item = $('#select_area').val()
@@ -32,23 +33,29 @@ $('.qiita_api').on("click", function () {
     const quantity = $('#quantity').val()
     const stocks = $('#stocks').val()
     const time = convertTimestampToDatetime()
+
+    //引数で入力したものを渡す
     api_get(search, item, start_date, end_date, quantity, stocks, time)
 })
 
 
-
+//qiita_APIを動かす関数
 function api_get(search, item, start_date, end_date, quantity, stocks, time) {
     $(function () {
         //ページ数と何個引っ張って来るかを設定する変数
         const page = 1
         $.ajaxSetup({
+            //Bearer の横にAPIkey
             Headers: { Authorization: "Bearer " }
         });
         $.getJSON(`https://qiita.com/api/v2/items?page=${page}&per_page=${quantity}&query=${item}:${search}+created%3A%3E%3D${start_date}+created%3A%3C%3D${end_date}+stocks:>=${stocks}`, function (data) {
 
+            //ifで検索結果がどうであったかを判断する
             if (data.length === 0) {
+                //結果がない場合は検索なしを表示する
                 $('#top').html("検索なし")
             } else {
+                //結果表示する
                 //入れる箱を準備
                 let qiita_box = [];
                 //レスポンス（data）が配列なのでfor文で中身の回数繰り返しする
@@ -59,6 +66,8 @@ function api_get(search, item, start_date, end_date, quantity, stocks, time) {
                     let stock = data[i].stocks_count
                     let tags_array = data[i].tags
                     let tags = [];
+
+                    //タグが配列に入っているから取り出すために、for文で取得する
                     for (var r = 0; r < tags_array.length; r++) {
                         tags.push(tags_array[r].name)
                     }
@@ -80,14 +89,14 @@ function api_get(search, item, start_date, end_date, quantity, stocks, time) {
                     )
                     $('#output').html(qiita_box)
 
-                    //ライクが１０以上はfirebaseに保存する
+                    //いいねが10以上はfirebaseに保存する
                     if (like > 10) {
                         const postData = {
                             title: title,
                             url: url,
                             time: time,
                         };
-
+                        //firebaseについかする
                         addDoc(collection(db, "qiita_save"), postData);
                     }
                 }
