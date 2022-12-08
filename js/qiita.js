@@ -7,6 +7,17 @@ import {
     addDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
+function convertTimestampToDatetime(timestamp) {
+    const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+    const Y = _d.getFullYear();
+    const m = (_d.getMonth() + 1).toString().padStart(2, '0');
+    const d = _d.getDate().toString().padStart(2, '0');
+    const H = _d.getHours().toString().padStart(2, '0');
+    const i = _d.getMinutes().toString().padStart(2, '0');
+    const s = _d.getSeconds().toString().padStart(2, '0');
+    return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+}
+
 
 
 const app = initializeApp(firebaseConfig);
@@ -18,13 +29,13 @@ $('.qiita_api').on("click", function () {
     const end_date = $('#end_date').val()
     const quantity = $('#quantity').val()
     const stocks = $('#stocks').val()
-
-    api_get(search, start_date, end_date, quantity, stocks)
+    const time = convertTimestampToDatetime()
+    api_get(search, start_date, end_date, quantity, stocks, time)
 })
 
 
 
-function api_get(search, start_date, end_date, quantity, stocks) {
+function api_get(search, start_date, end_date, quantity, stocks, time) {
     $(function () {
         //ページ数と何個引っ張って来るかを設定する変数
         const page = 1
@@ -72,10 +83,11 @@ function api_get(search, start_date, end_date, quantity, stocks) {
                     $('#output').html(qiita_box)
 
                     //ライクが１０以上はfirebaseに保存する
-                    if (like > 10) {
+                    if (like > 1) {
                         const postData = {
                             title: title,
-                            url: url
+                            url: url,
+                            time: time,
                         };
 
                         addDoc(collection(db, "qiita_save"), postData);
