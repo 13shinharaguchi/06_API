@@ -18,7 +18,7 @@ function convertTimestampToDatetime(timestamp) {
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 }
 
-//この下にfirebaseAPIkeyを記述
+//この下に自分のfirebaseAPIkeyを記述
 
 
 const app = initializeApp(firebaseConfig);
@@ -45,8 +45,10 @@ function api_get(search, item, start_date, end_date, quantity, stocks, time) {
         //ページ数と何個引っ張って来るかを設定する変数
         const page = 1
         $.ajaxSetup({
-            //Bearer の横にAPIkey
+            //Bearer の横にAPIkeyを下記のように張り付ける
+            // Headers: { Authorization: "Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
             Headers: { Authorization: "Bearer " }
+            
         });
         $.getJSON(`https://qiita.com/api/v2/items?page=${page}&per_page=${quantity}&query=${item}:${search}+created%3A%3E%3D${start_date}+created%3A%3C%3D${end_date}+stocks:>=${stocks}`, function (data) {
 
@@ -90,6 +92,7 @@ function api_get(search, item, start_date, end_date, quantity, stocks, time) {
                     $('#output').html(qiita_box)
 
                     //いいねが10以上はfirebaseに保存する
+                    // firebaseのtitleはstring,URLはstring,timeはtimestamp
                     if (like > 10) {
                         const postData = {
                             title: title,
@@ -97,6 +100,8 @@ function api_get(search, item, start_date, end_date, quantity, stocks, time) {
                             time: time,
                         };
                         //firebaseについかする
+
+                        // addDoc(collection(db, "自分のfirebaseのコレクションに切り替える"), postData);
                         addDoc(collection(db, "qiita_save"), postData);
                     }
                 }
