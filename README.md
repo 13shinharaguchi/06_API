@@ -1,6 +1,13 @@
 # Qiita_API
-## DEMO
-  - APIkeyあげれない。。。
+## 使い方
+### qiitaAPIkeyの取得
+  - [このサイトを参考に](https://qiita.com/koki_develop/items/57f86a1abc332ed2185d)
+  - 取得したkey をHeaders: { Authorization: "Bearer " }にはりつける、codeのコメントアウトみてください
+  - firebaseは自分で作成して追加してください、APIkeyとコレクション名、ドキュメント名を変更すればそのまま使えます
+  - qiita.htmlを開けば検索するところがでます
+  - いじるのはqiita.js ---- 22行目、50行目、105行目 
+  - qiita_list.js ---- 24行目
+  いじょう！！
 
 ## 紹介と使い方
   - qiita_APIを使用して、タイトルに検索ワードが入っているものを抽出して、いいねとストック数を表示する  
